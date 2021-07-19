@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import useRouter from "use-react-router";
 
@@ -22,8 +22,6 @@ export default function TodoList() {
     const tagsToSet = JSON.parse(localStorage.getItem("tags") || "[]")
     setTags(tagsToSet)
   }, [])
-
-  console.log(tags)
 
   const left = useMemo(() => todos.reduce((p, c) => p + (c.done ? 0 : 1), 0), [
     todos
@@ -62,11 +60,17 @@ export default function TodoList() {
     [todos]
   );
 
+
+  // something about trying to send the selectedTag as an argument causes an error "Converting circular structure to JSON"
   const [newValue, onNewValueChange, setNewValue] = useInput();
+  const selectedTag = useRef("");
   const onAddTodo = useOnEnter(
     () => {
+      // let tag = ""
+      // selectedTag === "0" ? tag = "" : tag = selectedTag
+
       if (newValue) {
-        addTodo(newValue);
+        addTodo(newValue, selectedTag);
         setNewValue("");
       }
     },
@@ -97,8 +101,8 @@ export default function TodoList() {
         <label htmlFor="toggle-all" />
         <select
           className="new-todo"
-          placeholder="Add a tag"
           defaultValue=""
+          ref={selectedTag}
           onKeyPress={onAddTodo}
           // value={chosenTag}
           // onChange={onNewValueChange}
