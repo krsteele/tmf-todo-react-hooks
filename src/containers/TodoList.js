@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { NavLink } from "react-router-dom";
 import useRouter from "use-react-router";
 
 import useInput from "../hooks/useInput";
 import useOnEnter from "../hooks/useOnEnter";
 import useTodos from "../reducers/useTodos";
-import { useTags } from "../reducers/useTags";
+// import { useTags } from "../reducers/useTags";
 import TodoItem from "./TodoItem";
 
 export default function TodoList() {
@@ -14,16 +14,23 @@ export default function TodoList() {
   const [todos, { addTodo, deleteTodo, setDone }] = useTodos();
 
   // sets tags in local storage
-  const tagsToStorage = useTags()
+  // const tagsToStorage = useTags()
   // manage state for tags
-  const [tags, setTags, chosenTag, setChosenTag] = useState([])
+  // const [tags, setTags, chosenTag, setChosenTag] = useState([])
   // get tags from localStorage and set state
-  useEffect(() => {
-    const tagsToSet = localStorage.getItem("tags")
-    setTags(tagsToSet)
-  }, [])
+  // useEffect(() => {
+  //   const tagsToSet = localStorage.getItem("tags")
+  //   setTags(tagsToSet)
+  // }, [])
+
+  const tags = ["home", "work", "yard", "errand", "partytime"]
+  const [selectedTag, setSelectedTag] = useState("")
+  const selectedTag = useRef("")
 
   console.log(tags)
+  useEffect(()=> {
+    console.log(selectedTag)
+  }, [selectedTag])
 
   const left = useMemo(() => todos.reduce((p, c) => p + (c.done ? 0 : 1), 0), [
     todos
@@ -66,6 +73,7 @@ export default function TodoList() {
   const onAddTodo = useOnEnter(
     () => {
       if (newValue) {
+        console.log(newValue)
         addTodo(newValue);
         setNewValue("");
       }
@@ -95,14 +103,15 @@ export default function TodoList() {
           onChange={onToggleAll}
         />
         <label htmlFor="toggle-all" />
+        {/* tags dropdown */}
         <select
           className="new-todo"
-          placeholder="Add a tag"
           defaultValue=""
+          ref={selectedTag}
           onKeyPress={onAddTodo}
-          value={chosenTag}
-          // onChange={onNewValueChange}
+          onChange={setSelectedTag(evt.target.value)}
         >
+          <option value="0">Choose a tag</option>
           {
             tags.map(t => (
               <option key={t} value={t}>
