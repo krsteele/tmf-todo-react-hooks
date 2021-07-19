@@ -14,7 +14,7 @@ export const reducer = {
   deleteTodo: (state, id) => state.filter(i => i.id !== id),
 
   // Create a new item
-  addTodo: (state, label) => [newTodo(label), ...state],
+  addTodo: (state, label, tag) => [newTodo(label, tag), ...state],
 
   // Set the done state of an item
   setDone: (state, id, done) =>
