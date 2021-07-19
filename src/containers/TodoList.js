@@ -15,17 +15,15 @@ export default function TodoList() {
 
   // sets tags in local storage
   const tagsToStorage = useTags()
-  
-  const [tags, setTags] = useState([])
-
+  // manage state for tags
+  const [tags, setTags, chosenTag, setChosenTag] = useState([])
+  // get tags from localStorage and set state
   useEffect(() => {
     const tagsToSet = localStorage.getItem("tags")
     setTags(tagsToSet)
   }, [])
 
   console.log(tags)
-
-
 
   const left = useMemo(() => todos.reduce((p, c) => p + (c.done ? 0 : 1), 0), [
     todos
@@ -97,6 +95,22 @@ export default function TodoList() {
           onChange={onToggleAll}
         />
         <label htmlFor="toggle-all" />
+        <select
+          className="new-todo"
+          placeholder="Add a tag"
+          defaultValue=""
+          onKeyPress={onAddTodo}
+          value={chosenTag}
+          // onChange={onNewValueChange}
+        >
+          {
+            tags.map(t => (
+              <option key={t} value={t}>
+                {t}
+              </option>
+            ))
+          }
+        </select>
         <ul className="todo-list">
           {visibleTodos.map(todo => (
             <TodoItem key={todo.id} todo={todo} />
