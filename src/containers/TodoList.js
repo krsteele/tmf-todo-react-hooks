@@ -103,6 +103,7 @@ export default function TodoList() {
           // value={chosenTag}
           // onChange={onNewValueChange}
         >
+          <option value="0">Choose a tag</option>
           {
             tags.length > 0 ?
             (tags.map(t => (
