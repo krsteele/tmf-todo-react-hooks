@@ -42,7 +42,7 @@ export default function TodoItem({ todo }) {
           onChange={onDone}
           autoFocus={true}
         />
-        <label>{todo.label}</label>
+        <label>{todo.label} - tag: {todo.tag}</label>
         <button className="destroy" onClick={onDelete} />
       </div>
       {editing && (
