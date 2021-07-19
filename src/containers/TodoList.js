@@ -1,16 +1,31 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { NavLink } from "react-router-dom";
 import useRouter from "use-react-router";
 
 import useInput from "../hooks/useInput";
 import useOnEnter from "../hooks/useOnEnter";
 import useTodos from "../reducers/useTodos";
+import { useTags } from "../reducers/useTags";
 import TodoItem from "./TodoItem";
 
 export default function TodoList() {
   const router = useRouter();
 
   const [todos, { addTodo, deleteTodo, setDone }] = useTodos();
+
+  // sets tags in local storage
+  const tagsToStorage = useTags()
+  
+  const [tags, setTags] = useState([])
+
+  useEffect(() => {
+    const tagsToSet = localStorage.getItem("tags")
+    setTags(tagsToSet)
+  }, [])
+
+  console.log(tags)
+
+
 
   const left = useMemo(() => todos.reduce((p, c) => p + (c.done ? 0 : 1), 0), [
     todos
