@@ -66,12 +66,12 @@ export default function TodoList() {
   const selectedTag = useRef("");
   const onAddTodo = useOnEnter(
     () => {
-      // let tag = ""
-      // selectedTag === "0" ? tag = "" : tag = selectedTag
-
+      let tag = ""
+      selectedTag === "0" ? tag = "" : tag = selectedTag.current.value
       if (newValue) {
-        addTodo(newValue, selectedTag);
+        addTodo(newValue, tag);
         setNewValue("");
+        selectedTag.current.value = "0"
       }
     },
     [newValue]
