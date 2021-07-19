@@ -2,10 +2,11 @@ import { globalReducer } from "react-hook-utils";
 
 import { guid } from "../utils";
 
-export const newTodo = label => ({
+export const newTodo = (label, tag) => ({
   done: false,
   id: guid(),
-  label: (label || "").trim()
+  label: (label || "").trim(), 
+  tag: (tag || "")
 });
 
 export const reducer = {
