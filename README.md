@@ -1,55 +1,26 @@
-# Hooks TODO
-A simple todo app built using react hooks.
+# TMF FOLD Project
 
-A live demo is available at: https://jacob-ebey.github.io/hooks-todo/
+This project builds from [the react-hooks example](https://github.com/tastejs/todomvc/tree/master/examples/react-hooks) of the [tastejs TodoMVC project](https://todomvc.com/). 
 
-## Available Scripts
+## To Run in Browser
 
-In the project directory, you can run:
+After forking and cloning:
 
+### `npm install`
 ### `npm run dev`
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Chosen Feature
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
+To this basic todo app, I chose to add tags for todo items and ability to view all items by tag name. 
 
-### `npm test`
+- The user can select a tag to associate with their todo. When the enter key is pressed, the new todo object saves with label and tag. If no tag is selected, the tag property is saved as an empty string. 
+- The user can filter todos by tag. When a tag is selected from the dropdown menu at the bottom of the list of todos, the list rerenders showing only todos associated with the chosen tag. 
 
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+While the tags are currently hard coded, I structured my files so that it would be easy to add CRUD operations for tags. 
 
-### `npm run build`
+### Improvements
 
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Ability to dynamically add, remove or update tags in the tags array
+- Ability to edit the tag on a todo object
+- Ability to add multiple tags to a todo object
 
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm start`
-
-Serves the production build from the "build" folder.
-
-### `npm run deploy`
-
-Creates and deploys a production build to github pages.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
