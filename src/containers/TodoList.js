@@ -60,6 +60,20 @@ export default function TodoList() {
     [todos]
   );
 
+  const [filterByTag, setFilterByTag] = useState("0")
+  const [filteredTodos, setFilteredTodos] = useState([])
+  const onTagFilter = () => {
+      
+      const newTodos = todos.filter(i => {
+        return i.tag === filterByTag
+      })
+     setFilteredTodos(newTodos)
+    }
+
+  useEffect(()=> {
+    onTagFilter()
+  }, [filterByTag])
+
 
   // something about trying to send the selectedTag as an argument causes an error "Converting circular structure to JSON"
   const [newValue, onNewValueChange, setNewValue] = useInput();
@@ -89,17 +103,7 @@ export default function TodoList() {
           value={newValue}
           onChange={onNewValueChange}
         />
-      </header>
-
-      <section className="main">
-        <input
-          id="toggle-all"
-          type="checkbox"
-          className="toggle-all"
-          checked={allSelected}
-          onChange={onToggleAll}
-        />
-        <label htmlFor="toggle-all" />
+        
         <select
           className="new-todo"
           defaultValue=""
@@ -120,11 +124,47 @@ export default function TodoList() {
             )
           }
         </select>
+        
+      </header>
+
+      <section className="main">
+      <input
+          id="toggle-all"
+          type="checkbox"
+          className="toggle-all"
+          checked={allSelected}
+          onChange={onToggleAll}
+        />
+        <label htmlFor="toggle-all" />
         <ul className="todo-list">
-          {visibleTodos.map(todo => (
+          {
+          filterByTag === "0" ?
+          visibleTodos.map(todo => (
             <TodoItem key={todo.id} todo={todo} />
-          ))}
+          )) :
+          filteredTodos.map(todo => (
+            <TodoItem key={todo.id} todo={todo} />
+          ))
+          }
         </ul>
+      </section>
+      <section className="header">
+      <select
+          className="new-todo"
+          onChange={(evt) => setFilterByTag(evt.target.value)}
+        >
+          <option value="0">Filter todos by tag</option>
+          {
+            tags.length > 0 ?
+            (tags.map(t => (
+              <option key={t} value={t}>
+                {t}
+              </option>
+            ))) : (
+              ""
+            )
+          }
+        </select>
       </section>
 
       <footer className="footer">
