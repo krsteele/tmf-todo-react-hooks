@@ -14,7 +14,7 @@ export default function TodoList() {
   const [todos, { addTodo, deleteTodo, setDone }] = useTodos();
 
   // sets tags in local storage
-  const tagsToStorage = useTags()
+  useTags()
   // manage state for tags
   const [tags, setTags] = useState([])
   // get tags from localStorage and set state
@@ -59,24 +59,22 @@ export default function TodoList() {
     },
     [todos]
   );
-
+  // Filtering by tag
   const [filterByTag, setFilterByTag] = useState("0")
   const [filteredTodos, setFilteredTodos] = useState([])
   const onTagFilter = () => {
-      
       const newTodos = todos.filter(i => {
         return i.tag === filterByTag
       })
      setFilteredTodos(newTodos)
     }
-
   useEffect(()=> {
     onTagFilter()
   }, [filterByTag])
 
 
-  // something about trying to send the selectedTag as an argument causes an error "Converting circular structure to JSON"
   const [newValue, onNewValueChange, setNewValue] = useInput();
+  // using ref instead of state so the value is available without rerender
   const selectedTag = useRef("");
   const onAddTodo = useOnEnter(
     () => {
@@ -103,14 +101,12 @@ export default function TodoList() {
           value={newValue}
           onChange={onNewValueChange}
         />
-        
+        {/* Tags dropdown select */}
         <select
           className="new-todo"
           defaultValue=""
           ref={selectedTag}
           onKeyPress={onAddTodo}
-          // value={chosenTag}
-          // onChange={onNewValueChange}
         >
           <option value="0">Choose a tag</option>
           {
@@ -136,6 +132,11 @@ export default function TodoList() {
           onChange={onToggleAll}
         />
         <label htmlFor="toggle-all" />
+
+        {/* 
+            check whether a filter tag has been selected 
+            and render conditionally using appropriate array 
+        */}
         <ul className="todo-list">
           {
           filterByTag === "0" ?
@@ -148,6 +149,9 @@ export default function TodoList() {
           }
         </ul>
       </section>
+      {/* 
+          Tag select for filtering.
+      */}
       <section className="header">
       <select
           className="new-todo"
